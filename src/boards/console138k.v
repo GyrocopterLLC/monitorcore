@@ -5,6 +5,8 @@
 `define USB1
 `define USB2
 
+`define LCD_DISPLAY
+
 package configPackage;  
 
 endpackage

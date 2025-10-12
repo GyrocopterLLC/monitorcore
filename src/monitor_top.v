@@ -29,6 +29,17 @@ module monitor_top (
     output [2:0] tmds_d_p,
     output [2:0] tmds_d_n,
 
+    `ifdef LCD_DISPLAY
+    // LCD output
+    output       lcd_clk,
+    output       lcd_vsync,
+    output       lcd_hsync,
+    output       lcd_de,
+    output [7:0] lcd_red,
+    output [7:0] lcd_green,
+    output [7:0] lcd_blue,
+`endif
+
     // USB1 and USB2
 `ifdef USB1
     inout usb1_dp,
@@ -97,6 +108,17 @@ pll_27 pll_27 (
 pll_74 pll_74 (
     .clkin(clk27),              // 27 Mhz input
     .clkout0(hclk), .clkout1(hclk5)
+);
+`endif
+
+// LCD clock
+`ifdef LCD_DISPLAY
+wire lcd_clk;
+
+gowin_pll_lcd pll_lcd (
+    .clkout0(lcd_clk),          // 31.2 MHz
+    .init_clk(sys_clk),
+    .clkin(sys_clk)
 );
 `endif
 
@@ -176,6 +198,29 @@ monitor2hdmi s2h(
     .tmds_d_n(tmds_d_n), .tmds_d_p(tmds_d_p)
 );
 
+`ifdef LCD_DISPLAY
+
+wire [7:0] lcd_overlay_x;
+wire [7:0] lcd_overlay_y;
+wire [14:0] lcd_overlay_color;
+
+
+monitor2lcd lcd(
+    .RESETN(resetn),
+
+    .LCD_PIXELCLK(lcd_clk), // 800x480 lcd pixel clock, 31.2 MHz
+    .LCD_VSYNC(lcd_vsync),
+    .LCD_HSYNC(lcd_hsync),
+    .LCD_DE(lcd_de),
+    .LCD_DATA({lcd_red, lcd_green, lcd_blue}),
+    .OVERLAY(lcd_overlay),
+    .OVERLAY_X(lcd_overlay_x),
+    .OVERLAY_Y(lcd_overlay_y),
+    .OVERLAY_COLOR(lcd_overlay_color)
+);
+
+`endif
+
 // IOSys for menu, rom loading...
 iosys_bl616 #(.CORE_ID(0), .FREQ(FREQ), .COLOR_LOGO(15'b11011_10010_00011)) sys (        // CORE ID 0: Monitor
     .clk(clk), .hclk(hclk), .resetn(resetn),
@@ -185,6 +230,15 @@ iosys_bl616 #(.CORE_ID(0), .FREQ(FREQ), .COLOR_LOGO(15'b11011_10010_00011)) sys 
     .joy1(joy1_btns | joy_usb1), .joy2(joy2_btns | joy_usb2),
     // UART connection to the companion MCU
     .uart_rx(UART_RXD), .uart_tx(UART_TXD)
+
+`ifdef LCD_DISPLAY
+,   .lcd_clk(lcd_clk),
+    .lcd_overlay(lcd_overlay),
+    .lcd_overlay_x(lcd_overlay_x),
+    .lcd_overlay_y(lcd_overlay_y),
+    .lcd_overlay_color(lcd_overlay_color)    
+`endif
+
 );
 
 endmodule

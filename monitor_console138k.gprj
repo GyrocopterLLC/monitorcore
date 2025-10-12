@@ -22,12 +22,17 @@
         <File path="src/iosys/gowin_dpb_menu.v" type="file.verilog" enable="1"/>
         <File path="src/iosys/iosys_bl616.v" type="file.verilog" enable="1"/>
         <File path="src/iosys/textdisp.v" type="file.verilog" enable="1"/>
+        <File path="src/iosys/textdisp_2cyc.v" type="file.verilog" enable="1"/>
         <File path="src/iosys/uart_fixed.v" type="file.verilog" enable="1"/>
         <File path="src/monitor2hdmi.v" type="file.verilog" enable="1"/>
+        <File path="src/monitor2lcd.v" type="file.verilog" enable="1"/>
         <File path="src/monitor_top.v" type="file.verilog" enable="1"/>
         <File path="src/pll/pll_12.v" type="file.verilog" enable="1"/>
         <File path="src/pll/pll_27.v" type="file.verilog" enable="1"/>
         <File path="src/pll/pll_74.v" type="file.verilog" enable="1"/>
+        <File path="src/pll_1912/gowin_pll_lcd.v" type="file.verilog" enable="1"/>
+        <File path="src/pll_1912/gowin_pll_lcd_mod.v" type="file.verilog" enable="1"/>
+        <File path="src/pll_init.v" type="file.verilog" enable="1"/>
         <File path="src/usb_hid_host.v" type="file.verilog" enable="1"/>
         <File path="src/boards/console.cst" type="file.cst" enable="1"/>
         <File path="src/monitor_console60k.rao" type="file.gao" enable="0"/>
