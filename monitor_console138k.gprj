@@ -6,6 +6,7 @@
     <Device name="GW5AST-138B" pn="GW5AST-LV138PG484AC1/I0">gw5ast138b-011</Device>
     <FileList>
         <File path="src/boards/console138k.v" type="file.verilog" enable="1"/>
+        <File path="src/button_press.v" type="file.verilog" enable="1"/>
         <File path="src/controller_ds2.sv" type="file.verilog" enable="1"/>
         <File path="src/controller_snes.v" type="file.verilog" enable="1"/>
         <File path="src/dualshock_controller.v" type="file.verilog" enable="1"/>
